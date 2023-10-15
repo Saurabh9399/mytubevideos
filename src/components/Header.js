@@ -1,6 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { toggleMenu } from "../redux/appSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(toggleMenu());
+  };
   return (
     <>
       <div className="col-span-2 flex items-center justify-start">
@@ -8,6 +15,7 @@ const Header = () => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1024px-Hamburger_icon.svg.png"
           className="w-6 mx-3 my-3"
           alt="hamburgerlogo"
+          onClick={handleClick}
         />
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/502px-Logo_of_YouTube_%282015-2017%29.svg.png"

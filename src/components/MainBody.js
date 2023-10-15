@@ -4,7 +4,7 @@ import VideosList from "./VideosList";
 
 const MainBody = () => {
   return (
-    <div className="col-span-10 border border-slate-300">
+    <div className="col-span-11 border border-slate-300">
       <ButtonsList />
       <VideosList />
     </div>

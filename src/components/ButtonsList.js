@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import Button from "./Button";
 
 const ButtonsList = () => {
+  let buttons = ["All","Music","Play","Films","Audio","Games","Devotional","Fun","Action","Video","License","Bike Riding","Bull Fight","Serials","Movies"];
   return (
-    <div>ButtonsList</div>
-  )
-}
+    <div className="">
+      {
+        buttons.map(item => <Button name={item}/>)
+      }
+    </div>
+  );
+};
 
-export default ButtonsList
+export default ButtonsList;
