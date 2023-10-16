@@ -3,18 +3,17 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const SidePanel = () => {
-
-  const mySidePanelOpen = useSelector(store => store.app.isSidePanelOpen)
-
-  console.log(mySidePanelOpen);
+  const mySidePanelOpen = useSelector((store) => store.app.isSidePanelOpen);
 
   // Early return pattern
-    if(!mySidePanelOpen) return null;
+  if (!mySidePanelOpen) return null;
 
   return (
     <div className="col-span-1 border border-slate-300 p-5 shadow-lg">
       <ul>
-        <Link to={"/"}><li>Home</li></Link>
+        <Link to={"/"}>
+          <li>Home</li>
+        </Link>
         <li>Shorts</li>
         <li>Videos</li>
         <li>Live</li>

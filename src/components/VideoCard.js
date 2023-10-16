@@ -4,7 +4,6 @@ const VideoCard = ({ info }) => {
   if (!info) return;
   const { snippet, statistics } = info;
   const { channelTitle, title, thumbnails } = snippet;
-  console.log(info);
 
   return (
     <div className="p-2 m-2 w-72 shadow-lg">
@@ -17,5 +16,15 @@ const VideoCard = ({ info }) => {
     </div>
   );
 };
+
+export const AddVideoCard = ({ info }) => {
+    return (
+        <div className="border border-red-400">
+            <VideoCard info={info}/>
+        </div>
+    )
+
+}
+
 
 export default VideoCard;

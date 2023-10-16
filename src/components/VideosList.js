@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { YOUTUBE_VIDEOS_API } from "../utils/constants";
-import VideoCard from "./VideoCard";
+import VideoCard, { AddVideoCard } from "./VideoCard";
 import { Link } from "react-router-dom";
 
 const VideosList = () => {
@@ -12,14 +12,14 @@ const VideosList = () => {
   const getVideos = async () => {
     const response = await fetch(YOUTUBE_VIDEOS_API);
     const data = await response.json();
-    console.log(data);
     setVideos(data.items);
   };
   return (
     <div className="flex flex-wrap">
+      <AddVideoCard info={videos[8]}/>
       {videos.map((item) => (
-        <Link to={"/watch?v=" + item.id}>
-          <VideoCard info={item} key={item.id} />
+        <Link to={"/watch?v=" + item.id} key={item.id}>
+          <VideoCard info={item} />
         </Link>
       ))}
       <VideoCard info={videos[0]} />
