@@ -6,7 +6,7 @@ const ButtonsList = () => {
   return (
     <div className="">
       {
-        buttons.map(item => <Button name={item}/>)
+        buttons.map(item => <Button name={item} key={item}/>)
       }
     </div>
   );
