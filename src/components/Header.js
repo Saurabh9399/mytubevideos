@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { toggleMenu } from "../redux/appSlice";
-import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { addSearchSuggestionsClickResults, toggleMenu } from "../redux/appSlice";
+import { YOUTUBE_SEARCH_API, YOUTUBE_SUGGESTIONS_SEARCH_API } from "../utils/constants";
+import { cacheResults } from "../redux/searchSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [focus, setFocus] = useState(false);
+  const searchCache = useSelector((store) => store.search);
 
   const handleClick = () => {
     dispatch(toggleMenu());
   };
-  const handleBlur = () => {
-    
-  };
-  const handleFocus = () => {
-    setFocus(true);
-  }
   useEffect(() => {
-    console.log(searchQuery);
     if (searchQuery) {
-      const timer = setTimeout(() => getSearchSuggestions(), 200);
+      const timer = setTimeout(() => {
+        if (searchCache[searchQuery]) {
+          setSuggestions(searchCache[searchQuery]);
+        } else {
+          getSearchSuggestions();
+        }
+      }, 200);
 
       return () => clearTimeout(timer);
     }
@@ -33,20 +36,41 @@ const Header = () => {
     const json = await data.json();
     console.log(json[1]);
     setSuggestions(json[1]);
+
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1],
+      })
+    );
   };
+
+  const handleSuggestionClick = async(suggestion) => {
+    console.log(suggestion);
+    const data = await fetch(YOUTUBE_SUGGESTIONS_SEARCH_API(JSON.stringify(suggestion)));
+
+    const json = await data.json();
+
+    console.log("search result",json.items);
+
+    dispatch(addSearchSuggestionsClickResults(json.items))
+
+    navigate("search")
+
+  };
+
 
   return (
     <>
       <div className="col-span-2 flex items-center justify-start">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1024px-Hamburger_icon.svg.png"
-          className="w-6 mx-3 my-3"
+          className="w-6 mx-2 my-3"
           alt="hamburgerlogo"
           onClick={handleClick}
         />
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/502px-Logo_of_YouTube_%282015-2017%29.svg.png"
-          className="w-16 h-10 mx-2 my-2"
+          src="https://cdn.pixabay.com/photo/2020/11/01/03/07/youtube-5702763_1280.png"
+          className="w-22 h-10 mx-1 my-2 hover:scale-125"
           alt="youtubelogo"
         />
       </div>
@@ -62,11 +86,17 @@ const Header = () => {
           Search
         </span>
       </div>
-      {searchQuery && focus && (
+      {focus && searchQuery && (
         <div className="absolute top-16 border left-[32%] pl-4 py-2 bg-gray-100 rounded-md w-[33%] shadow-md">
           <ul>
-            {suggestions.map((suggestion) => (
-              <li className="font-bold hover:bg-gray-200 p-1">{suggestion}</li>
+            {suggestions.map((suggestion, index) => (
+              <li
+                className="font-bold hover:bg-gray-200 p-1"
+                key={index}
+                onMouseDown={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion}
+              </li>
             ))}
           </ul>
         </div>

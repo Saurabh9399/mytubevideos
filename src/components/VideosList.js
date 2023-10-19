@@ -16,13 +16,15 @@ const VideosList = () => {
   };
   return (
     <div className="flex flex-wrap">
-      <AddVideoCard info={videos[8]}/>
+      <Link to={"/watch?v=" + videos[8]?.id}>
+        {" "}
+        <AddVideoCard info={videos[8]} />
+      </Link>
       {videos.map((item) => (
         <Link to={"/watch?v=" + item.id} key={item.id}>
           <VideoCard info={item} />
         </Link>
       ))}
-      <VideoCard info={videos[0]} />
     </div>
   );
 };

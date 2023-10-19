@@ -6,3 +6,9 @@ export const YOUTUBE_VIDEOS_API =
 
 export const YOUTUBE_SEARCH_API =
   "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
+
+export const YOUTUBE_SUGGESTIONS_SEARCH_API = (search) => {
+  console.log(search);
+  return "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q="+search+"&key=" +
+  GOOGLE_API_KEY;
+}

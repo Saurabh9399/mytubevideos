@@ -4,6 +4,7 @@ const appSlice = createSlice({
   name: "app",
   initialState: {
     isSidePanelOpen: true,
+    searchSuggestionsClickResults: [],
   },
   reducers: {
     toggleMenu: (state) => {
@@ -12,9 +13,12 @@ const appSlice = createSlice({
     closeMenu: (state, action) => {
       state.isSidePanelOpen = action.payload;
     },
+    addSearchSuggestionsClickResults: (state, action) => {
+      state.searchSuggestionsClickResults = action.payload;
+    },
   },
 });
 
-export const { toggleMenu, closeMenu } = appSlice.actions;
+export const { toggleMenu, closeMenu,addSearchSuggestionsClickResults } = appSlice.actions;
 
 export default appSlice.reducer;
