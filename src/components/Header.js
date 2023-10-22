@@ -69,8 +69,8 @@ const Header = () => {
           onClick={handleClick}
         />
         <img
-          src="https://cdn.pixabay.com/photo/2020/11/01/03/07/youtube-5702763_1280.png"
-          className="w-22 h-10 mx-1 my-2 hover:scale-125"
+          src="https://bevouliin.com/wp-content/uploads/2014/02/video-television-tv-movie-logo-template-preview-bevouliin.jpg"
+          className="w-[30%] h-18 mx-1 my-2 hover:scale-125"
           alt="youtubelogo"
         />
       </div>
